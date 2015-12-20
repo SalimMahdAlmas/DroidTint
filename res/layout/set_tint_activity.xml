@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.larswerkman.holocolorpicker.ColorPicker
+        android:id="@+id/picker"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"/>
+    <com.larswerkman.holocolorpicker.OpacityBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/opacity" />
+    <com.larswerkman.holocolorpicker.SaturationBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/satru" />
+    <com.larswerkman.holocolorpicker.SVBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sv" />
+    <com.larswerkman.holocolorpicker.ValueBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/value" />
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/default_Tint_Per"
+        android:layout_marginLeft="20dip"
+        android:text="@string/def_t"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/apply"
+        android:id="@+id/apply_tint" />
+</LinearLayout>

@@ -1,74 +1,81 @@
 package sahidalmas.xposed.droidtint;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.provider.Settings;
 
-import java.lang.reflect.Method;
+
+public class MainActivity extends PreferenceActivity {
 
 
-public class MainActivity extends ActionBarActivity {
+    private CheckBoxPreference mDarker;
+    public static String DARKER_TINT_KEY = "dark_t";
+
+    public boolean sDarkerTint = false;
+    private Activity mActivity;
+     Preference perApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        addPreferencesFromResource(R.xml.setting);
 
 
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+        mDarker = (CheckBoxPreference)findPreference("darker_tint");
+        mDarker.setSummaryOn("Enable");
+        mDarker.setSummaryOff("Disable");
 
-    // New Activity Came
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-
-        FireColor.postResult(this);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        this.mActivity = this;
+        int code = Settings.System.getInt(getContentResolver(),DARKER_TINT_KEY,1);
+        if (code == 0) {
+            sDarkerTint = true;
         }
 
-        return super.onOptionsItemSelected(item);
+
+        findPreference("darker_tint_factor").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                FireColor.postResult(mActivity);
+                return true;
+            }
+        });
+
+
+        mDarker.setChecked(sDarkerTint);
+        mDarker.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                int a;
+                if (mDarker.isChecked()) {
+                    a = 0;
+                } else {
+                    a = 1;
+                }
+
+                Settings.System.putInt(getContentResolver(), DARKER_TINT_KEY, a);
+                FireColor.postResult(mActivity);
+
+                return true;
+            }
+        });
+
+        perApp = findPreference("per_app");
+        perApp.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), PerAppTintList.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+
     }
 }

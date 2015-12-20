@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<CheckBoxPreference android:title="@string/d_t" android:key="darker_tint" />
+    <Preference android:layout="@layout/pref_factor_dark" android:key="darker_tint_factor" />
+    <Preference android:key="per_app" android:title="@string/per_app_tint" />
+
+</PreferenceScreen>

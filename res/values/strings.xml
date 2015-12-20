@@ -3,4 +3,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="d_t">Darker Tint</string>
+    <string name="per_app_tint">Per App Tint</string>
+    <string name="loading">Loading</string>
+    <string name="def_t">Use Default Tint</string>
+    <string name="apply">Apply</string>
+    <string name="log_sys">Logging System</string>
 </resources>
